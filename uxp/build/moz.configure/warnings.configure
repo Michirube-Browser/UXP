@@ -103,12 +103,6 @@ check_and_add_gcc_warning('-Wno-error=free-nonheap-object', when='MOZ_PGO')
 # Would be a pain to fix all occurrences, for very little gain
 check_and_add_gcc_warning('-Wno-error=multistatement-macros')
 
-# GCC 11+ reports non-literal format strings as format-security warnings;
-# -Werror=format would otherwise make those build failures. There are many
-# intentional such call sites in the engine (e.g. JS_ReportError* with a
-# vararg message string), so demote the warning instead.
-check_and_add_gcc_warning('-Wno-error=format-security')
-
 # We use mix of both POSIX and Win32 printf format across the tree, so format
 # warnings are useless on mingw.
 check_and_add_gcc_warning('-Wno-format',

@@ -1,4 +1,4 @@
-# Dactyloidae iOS
+# Michirube iOS
 
 This code only works with Xcode 9.2 and supports iOS 10 and above.
 
@@ -14,11 +14,11 @@ This code is written in Swift 3.2.
     ```
 3. Clone the repository:
     ```shell
-    git clone https://repo.dactyloidae.xyz/dactyloidae/dactyloidae
+    git clone https://repo.michirube.xyz/michirube/michirube
     ```
 4. Pull in the project dependencies:
     ```shell
-    cd dactyloidae/mobile/ios
+    cd michirube/mobile/ios
     sh ./bootstrap.sh
     ```
 5. Open `Client.xcodeproj` in Xcode.

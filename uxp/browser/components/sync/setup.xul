@@ -43,7 +43,7 @@
       &pairDevice.dialog.description.label;
       <label class="text-link"
              value="&addDevice.showMeHow.label;"
-             href="http://www.palemoon.org/sync/help/easy-setup.shtml"/>
+             href="https://tsubakiproject.qzz.io"/>
     </description>
     <separator class="groove-thin"/>
     <description>
@@ -221,7 +221,7 @@
       &pairDevice.setup.description.label;
       <label class="text-link"
              value="&addDevice.showMeHow.label;"
-             href="http://www.palemoon.org/sync/help/easy-setup.shtml"/>
+             href="https://tsubakiproject.qzz.io"/>
     </description>
     <label value="&addDevice.setup.enterCode.label;"
            control="easySetupPIN1"/>
@@ -340,7 +340,7 @@
       <description>
         &existingRecoveryKey.description;
         <label class="text-link"
-               href="http://www.palemoon.org/sync/help/recoverykey.shtml">
+               href="https://tsubakiproject.qzz.io">
           &addDevice.showMeHow.label;
         </label>
         <spacer id="passphraseHelpSpacer"/>

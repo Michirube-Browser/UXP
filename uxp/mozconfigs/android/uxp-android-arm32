@@ -1,4 +1,4 @@
-# Build Dactyloidae for Android:
+# Build Michirube for Android:
 ac_add_options --enable-application=mobile/android
 ac_add_options --target=arm-linux-androideabi
 

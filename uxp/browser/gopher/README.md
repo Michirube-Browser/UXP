@@ -1,6 +1,6 @@
 ## libgopher
 
-libgopher (a fork of overbiteff) lets you browse Gopher sites directly in legacy Firefox-based browsers such as Dactyloidae.
+libgopher (a fork of overbiteff) lets you browse Gopher sites directly in legacy Firefox-based browsers such as Michirube.
 
 In this tree it is built into the browser rather than installed as an add-on. The browser registers the Gopher protocol handler during startup, so `gopher://` links work immediately in a new profile.
 

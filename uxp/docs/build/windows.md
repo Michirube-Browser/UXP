@@ -1,4 +1,4 @@
-# How to compile Dactyloidae
+# How to compile Michirube
 
 Step 1. Install Git for Windows (win7 users should install 2.46.2)
 
@@ -18,7 +18,7 @@ Step 6. Copy shell-msvc-dactyl.bat from docs folder to your mozilla-build direct
 
 Step 7. Run shell-msvc-dactyl.bat from the mozilla-build directory.
 
-Step 8. Select the architecture that you want to build Dactyloidae for
+Step 8. Select the architecture that you want to build Michirube for
 
 Step 9. CD to the Repo (msys uses unix style dirs, c:\ is /c/ for example)
 

@@ -1,4 +1,4 @@
 ;!@Install@!UTF-8!
-Title="Dactyloidae"
+Title="Michirube"
 RunProgram="setup.exe"
 ;!@InstallEnd@!

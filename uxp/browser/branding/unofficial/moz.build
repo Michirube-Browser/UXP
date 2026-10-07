@@ -12,5 +12,5 @@ include('../shared/branding.mozbuild')
 ApplicationBranding()
 
 FINAL_TARGET_FILES['..'] += [
-    'dactyloidae.VisualElementsManifest.xml',
+    'michirube.VisualElementsManifest.xml',
 ]

@@ -3,7 +3,7 @@
 #define UXP_VERSION @MOZILLA_UAVERSION_U@
 #define UXP_VERSION_SLICE Goanna/@UXP_VERSION@
 #define UXP_DATE_SLICE Goanna/20170101
-#define APP_SLICE Dactyloidae/@MOZ_APP_VERSION@
+#define APP_SLICE Michirube/@MOZ_APP_VERSION@
 
 #define GK_VERSION 52.9
 #define GK_SLICE Gecko/20100101
@@ -63,7 +63,7 @@ pref("@GUAO_PREF@.citi.com","Mozilla/5.0 (%OS_SLICE% rv:68.0) @GK_SLICE@ Firefox
 pref("@GUAO_PREF@.facebook.com","Mozilla/5.0 (%OS_SLICE% rv:68.0) @GK_SLICE@ Firefox/68.0 @APP_SLICE@");
 pref("@GUAO_PREF@.mewe.com", "Mozilla/5.0 (%OS_SLICE% rv:102.0) Gecko/20100101 Firefox/102.0");
 
-// UA-sniffing domains that are "app/vendor-specific" and do not like Dactyloidae
+// UA-sniffing domains that are "app/vendor-specific" and do not like Michirube
 pref("@GUAO_PREF@.web.whatsapp.com","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36");
 pref("@GUAO_PREF@.youtube.com","Mozilla/5.0 (%OS_SLICE%; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0");
 pref("@GUAO_PREF@.studio.youtube.com","Mozilla/5.0 (%OS_SLICE%; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0");

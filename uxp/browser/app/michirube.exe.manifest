@@ -3,10 +3,10 @@
 <assemblyIdentity
         version="1.0.0.0"
         processorArchitecture="*"
-        name="Dactyloidae"
+        name="Michirube"
         type="win32"
 />
-<description>Dactyloidae</description>
+<description>Michirube</description>
 <dependency>
         <dependentAssembly>
                 <assemblyIdentity

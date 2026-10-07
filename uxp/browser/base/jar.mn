@@ -53,8 +53,15 @@ browser.jar:
         content/browser/abouthome/restore-large@2x.png (content/abouthome/restore-large@2x.png)
         content/browser/abouthome/mozilla@2x.png       (content/abouthome/mozilla@2x.png)
 
+        # Pager-Michishirube start page wallpapers
+        content/browser/abouthome/assets/wallpapers/bluehour.svg  (content/abouthome/assets/wallpapers/bluehour.svg)
+        content/browser/abouthome/assets/wallpapers/dawn.svg      (content/abouthome/assets/wallpapers/dawn.svg)
+        content/browser/abouthome/assets/wallpapers/forest.svg    (content/abouthome/assets/wallpapers/forest.svg)
+        content/browser/abouthome/assets/wallpapers/night.svg     (content/abouthome/assets/wallpapers/night.svg)
+
         # Pager start page assets
         content/browser/abouthome/pager/style.css           (content/abouthome/pager/style.css)
+        content/browser/abouthome/pager/clock.css            (content/abouthome/pager/clock.css)
         content/browser/abouthome/pager/main.js             (content/abouthome/pager/main.js)
         content/browser/abouthome/pager/favicon.ico         (content/abouthome/pager/favicon.ico)
         content/browser/abouthome/pager/assets/fonts/MiSans-Medium/result.css  (content/abouthome/pager/assets/fonts/MiSans-Medium/result.css)

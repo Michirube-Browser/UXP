@@ -137,7 +137,7 @@ const PREFIX_NS_EM                    = "http://www.mozilla.org/2004/em-rdf#";
 const TOOLKIT_ID                      = "toolkit@mozilla.org";
 #ifdef MOZ_PHOENIX_EXTENSIONS
 const FIREFOX_ID                      = "{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-// Pale Moon's legacy application ID.  Basilisk and Dactyloidae use the
+// Pale Moon's legacy application ID.  Basilisk and Michirube use the
 // Firefox ID above, but extensions may still target Pale Moon explicitly.
 const PALEMOON_ID                     = "{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}"
 const FIREFOX_APPCOMPATVERSION        = "56.9"

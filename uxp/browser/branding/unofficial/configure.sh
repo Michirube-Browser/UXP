@@ -2,24 +2,24 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-MOZ_APP_NAME=dactyloidae
+MOZ_APP_NAME=michirube
 
-MOZ_APP_BASENAME="Dactyloidae"
+MOZ_APP_BASENAME="Michirube"
 
-MOZ_APP_DISPLAYNAME="Dactyloidae"
+MOZ_APP_DISPLAYNAME="Michirube"
 
-MOZ_APP_UA_NAME="Dactyloidae"
+MOZ_APP_UA_NAME="Michirube"
 
-MOZ_APP_VENDOR="Dactyloidae"
+MOZ_APP_VENDOR="Michirube"
 
-MOZ_APP_FULLNAME="Dactyloidae"
+MOZ_APP_FULLNAME="Michirube"
 
-MOZ_APP_PROFILE="Dactyloidae"
+MOZ_APP_PROFILE="Michirube"
 
-MOZ_APP_REMOTINGNAME=com.Dactyloidae
+MOZ_APP_REMOTINGNAME=com.Michirube
 
 MOZ_DISTRIBUTION_ID=com.opensource
 
-MOZ_MACBUNDLE_NAME="Dactyloidae.app"
+MOZ_MACBUNDLE_NAME="Michirube.app"
 
-MOZ_SOURCE_REPO=https://repo.dactyloidae.xyz/Dactyloidae/UXP
+MOZ_SOURCE_REPO=https://repo.michirube.xyz/Michirube/UXP

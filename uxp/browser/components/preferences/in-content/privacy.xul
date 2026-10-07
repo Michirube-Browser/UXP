@@ -91,7 +91,7 @@
                 label="&GPCLabel.label;" />
       <label class="text-link"
              value="&GPCLearnMore.label;"
-             href="https://www.palemoon.org/support/global-privacy-control"/>
+             href="https://tsubakiproject.qzz.io"/>
     </hbox>
   </vbox>
 </groupbox>

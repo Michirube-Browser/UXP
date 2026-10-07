@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+https://bugzilla.mozilla.org/show_bug.cgi?id=1933591
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Test for relaxed select parser rules</title>
+  <script type="text/javascript" src="/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="/tests/SimpleTest/test.css" />
+</head>
+<body>
+<pre id="test">
+<script class="testbody" type="text/javascript">
+SimpleTest.waitForExplicitFinish();
+
+function parse(markup) {
+  const host = document.createElement("div");
+  host.innerHTML = markup;
+  return host;
+}
+
+(function testDivAllowedInSelect() {
+  const host = parse("<select><div><option>One</option></div></select>");
+  const select = host.querySelector("select");
+  ok(!!select, "select should parse");
+  is(select.firstElementChild && select.firstElementChild.tagName, "DIV",
+     "div should remain inside select");
+  is(select.querySelector("option").textContent, "One",
+     "option should still be found under nested content");
+})();
+
+(function testTextareaDoesNotCloseSelect() {
+  const host = parse("<select><textarea>abc</textarea><option>One</option></select>");
+  const select = host.querySelector("select");
+  ok(!!select, "select should parse");
+  ok(!!select.querySelector("textarea"), "textarea should remain inside select");
+  ok(!!select.querySelector("option"), "option should remain inside select");
+})();
+
+(function testInputStillClosesSelect() {
+  const host = parse("<select><div><input></div><option>One</option></select>");
+  const select = host.querySelector("select");
+  ok(!!select, "select should parse");
+  ok(!select.querySelector("input"), "input should not remain inside select");
+  ok(!select.querySelector("option"), "option should no longer be inside the closed select");
+  ok(!!host.querySelector("input"), "input should still be inserted in the tree");
+})();
+
+SimpleTest.finish();
+</script>
+</pre>
+</body>
+</html>

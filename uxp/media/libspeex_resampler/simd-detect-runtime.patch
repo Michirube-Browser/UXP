@@ -1,0 +1,298 @@
+diff --git a/media/libspeex_resampler/src/resample.c b/media/libspeex_resampler/src/resample.c
+--- a/media/libspeex_resampler/src/resample.c
++++ b/media/libspeex_resampler/src/resample.c
+@@ -94,17 +94,11 @@
+ 
+ #ifndef UINT32_MAX
+ #define UINT32_MAX 4294967295U
+ #endif
+ 
+-#ifdef USE_SSE
+-#include "resample_sse.h"
+-#endif
+-
+-#ifdef USE_NEON
+-#include "resample_neon.h"
+-#endif
++#include "simd_detect.h"
+ 
+ /* Number of elements to allocate on the stack */
+ #ifdef VAR_ARRAYS
+ #define FIXED_STACK_ALLOC 8192
+ #else
+@@ -344,11 +338,13 @@
+    while (!(last_sample >= (spx_int32_t)*in_len || out_sample >= (spx_int32_t)*out_len))
+    {
+       const spx_word16_t *sinct = & sinc_table[samp_frac_num*N];
+       const spx_word16_t *iptr = & in[last_sample];
+ 
+-#ifndef OVERRIDE_INNER_PRODUCT_SINGLE
++#ifdef OVERRIDE_INNER_PRODUCT_SINGLE
++      if (!moz_speex_have_single_simd()) {
++#endif
+       int j;
+       sum = 0;
+       for(j=0;j<N;j++) sum += MULT16_16(sinct[j], iptr[j]);
+ 
+ /*    This code is slower on most DSPs which have only 2 accumulators.
+@@ -362,12 +358,14 @@
+         accum[3] += MULT16_16(sinct[j+3], iptr[j+3]);
+       }
+       sum = accum[0] + accum[1] + accum[2] + accum[3];
+ */
+       sum = SATURATE32PSHR(sum, 15, 32767);
+-#else
++#ifdef OVERRIDE_INNER_PRODUCT_SINGLE
++      } else {
+       sum = inner_product_single(sinct, iptr, N);
++      }
+ #endif
+ 
+       out[out_stride * out_sample++] = sum;
+       last_sample += int_advance;
+       samp_frac_num += frac_advance;
+@@ -402,23 +400,27 @@
+    while (!(last_sample >= (spx_int32_t)*in_len || out_sample >= (spx_int32_t)*out_len))
+    {
+       const spx_word16_t *sinct = & sinc_table[samp_frac_num*N];
+       const spx_word16_t *iptr = & in[last_sample];
+ 
+-#ifndef OVERRIDE_INNER_PRODUCT_DOUBLE
++#ifdef OVERRIDE_INNER_PRODUCT_DOUBLE
++      if(moz_speex_have_double_simd()) {
++#endif
+       int j;
+       double accum[4] = {0,0,0,0};
+ 
+       for(j=0;j<N;j+=4) {
+         accum[0] += sinct[j]*iptr[j];
+         accum[1] += sinct[j+1]*iptr[j+1];
+         accum[2] += sinct[j+2]*iptr[j+2];
+         accum[3] += sinct[j+3]*iptr[j+3];
+       }
+       sum = accum[0] + accum[1] + accum[2] + accum[3];
+-#else
++#ifdef OVERRIDE_INNER_PRODUCT_DOUBLE
++      } else {
+       sum = inner_product_double(sinct, iptr, N);
++      }
+ #endif
+ 
+       out[out_stride * out_sample++] = PSHR32(sum, 15);
+       last_sample += int_advance;
+       samp_frac_num += frac_advance;
+@@ -458,11 +460,13 @@
+       const spx_word16_t frac = ((float)((samp_frac_num*st->oversample) % st->den_rate))/st->den_rate;
+ #endif
+       spx_word16_t interp[4];
+ 
+ 
+-#ifndef OVERRIDE_INTERPOLATE_PRODUCT_SINGLE
++#ifdef OVERRIDE_INTERPOLATE_PRODUCT_SINGLE
++      if (!moz_speex_have_single_simd()) {
++#endif
+       int j;
+       spx_word32_t accum[4] = {0,0,0,0};
+ 
+       for(j=0;j<N;j++) {
+         const spx_word16_t curr_in=iptr[j];
+@@ -473,13 +477,15 @@
+       }
+ 
+       cubic_coef(frac, interp);
+       sum = MULT16_32_Q15(interp[0],accum[0]) + MULT16_32_Q15(interp[1],accum[1]) + MULT16_32_Q15(interp[2],accum[2]) + MULT16_32_Q15(interp[3],accum[3]);
+       sum = SATURATE32PSHR(sum, 15, 32767);
+-#else
++#ifdef OVERRIDE_INTERPOLATE_PRODUCT_SINGLE
++      } else {
+       cubic_coef(frac, interp);
+       sum = interpolate_product_single(iptr, st->sinc_table + st->oversample + 4 - offset - 2, N, st->oversample, interp);
++      }
+ #endif
+ 
+       out[out_stride * out_sample++] = sum;
+       last_sample += int_advance;
+       samp_frac_num += frac_advance;
+@@ -521,11 +527,13 @@
+       const spx_word16_t frac = ((float)((samp_frac_num*st->oversample) % st->den_rate))/st->den_rate;
+ #endif
+       spx_word16_t interp[4];
+ 
+ 
+-#ifndef OVERRIDE_INTERPOLATE_PRODUCT_DOUBLE
++#ifdef OVERRIDE_INTERPOLATE_PRODUCT_DOUBLE
++      if (!moz_speex_have_double_simd()) {
++#endif
+       int j;
+       double accum[4] = {0,0,0,0};
+ 
+       for(j=0;j<N;j++) {
+         const double curr_in=iptr[j];
+@@ -535,13 +543,15 @@
+         accum[3] += MULT16_16(curr_in,st->sinc_table[4+(j+1)*st->oversample-offset+1]);
+       }
+ 
+       cubic_coef(frac, interp);
+       sum = MULT16_32_Q15(interp[0],accum[0]) + MULT16_32_Q15(interp[1],accum[1]) + MULT16_32_Q15(interp[2],accum[2]) + MULT16_32_Q15(interp[3],accum[3]);
+-#else
++#ifdef OVERRIDE_INTERPOLATE_PRODUCT_DOUBLE
++      } else {
+       cubic_coef(frac, interp);
+       sum = interpolate_product_double(iptr, st->sinc_table + st->oversample + 4 - offset - 2, N, st->oversample, interp);
++      }
+ #endif
+ 
+       out[out_stride * out_sample++] = PSHR32(sum,15);
+       last_sample += int_advance;
+       samp_frac_num += frac_advance;
+diff --git a/media/libspeex_resampler/src/resample_neon.c b/media/libspeex_resampler/src/resample_neon.c
+--- a/media/libspeex_resampler/src/resample_neon.c
++++ b/media/libspeex_resampler/src/resample_neon.c
+@@ -34,10 +34,12 @@
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+ 
++#include "simd_detect.h"
++
+ #include <stdint.h>
+ 
+ #ifdef FIXED_POINT
+ #if defined(__aarch64__)
+ static inline int32_t saturate_32bit_to_16bit(int32_t a) {
+@@ -76,11 +78,11 @@
+ #define WORD2INT(x) (saturate_32bit_to_16bit(x))
+ 
+ #define OVERRIDE_INNER_PRODUCT_SINGLE
+ /* Only works when len % 4 == 0 and len >= 4 */
+ #if defined(__aarch64__)
+-static inline int32_t inner_product_single(const int16_t *a, const int16_t *b, unsigned int len)
++int32_t inner_product_single(const int16_t *a, const int16_t *b, unsigned int len)
+ {
+     int32_t ret;
+     uint32_t remainder = len % 16;
+     len = len - remainder;
+ 
+@@ -131,11 +133,11 @@
+ 		  : "cc", "v0",
+ 		    "v16", "v17", "v18", "v19", "v20", "v21", "v22", "v23");
+     return ret;
+ }
+ #else
+-static inline int32_t inner_product_single(const int16_t *a, const int16_t *b, unsigned int len)
++int32_t inner_product_single(const int16_t *a, const int16_t *b, unsigned int len)
+ {
+     int32_t ret;
+     uint32_t remainder = len % 16;
+     len = len - remainder;
+ 
+@@ -221,11 +223,11 @@
+ #define WORD2INT(x) (saturate_float_to_16bit(x))
+ 
+ #define OVERRIDE_INNER_PRODUCT_SINGLE
+ /* Only works when len % 4 == 0 and len >= 4 */
+ #if defined(__aarch64__)
+-static inline float inner_product_single(const float *a, const float *b, unsigned int len)
++float inner_product_single(const float *a, const float *b, unsigned int len)
+ {
+     float ret;
+     uint32_t remainder = len % 16;
+     len = len - remainder;
+ 
+@@ -276,11 +278,11 @@
+ 		  : "cc", "v1", "v2", "v3", "v4",
+ 		    "v16", "v17", "v18", "v19", "v20", "v21", "v22", "v23");
+     return ret;
+ }
+ #else
+-static inline float inner_product_single(const float *a, const float *b, unsigned int len)
++float inner_product_single(const float *a, const float *b, unsigned int len)
+ {
+     float ret;
+     uint32_t remainder = len % 16;
+     len = len - remainder;
+ 
+diff --git a/media/libspeex_resampler/src/resample_sse.c b/media/libspeex_resampler/src/resample_sse.c
+--- a/media/libspeex_resampler/src/resample_sse.c
++++ b/media/libspeex_resampler/src/resample_sse.c
+@@ -29,37 +29,39 @@
+    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+ 
++#include "simd_detect.h"
++
+ #include <xmmintrin.h>
+ 
+ #define OVERRIDE_INNER_PRODUCT_SINGLE
+-static inline float inner_product_single(const float *a, const float *b, unsigned int len)
++float inner_product_single(const float *a, const float *b, unsigned int len)
+ {
+    int i;
+    float ret;
+    __m128 sum = _mm_setzero_ps();
+    for (i=0;i<len;i+=8)
+    {
+       sum = _mm_add_ps(sum, _mm_mul_ps(_mm_loadu_ps(a+i), _mm_loadu_ps(b+i)));
+       sum = _mm_add_ps(sum, _mm_mul_ps(_mm_loadu_ps(a+i+4), _mm_loadu_ps(b+i+4)));
+    }
+    sum = _mm_add_ps(sum, _mm_movehl_ps(sum, sum));
+    sum = _mm_add_ss(sum, _mm_shuffle_ps(sum, sum, 0x55));
+    _mm_store_ss(&ret, sum);
+    return ret;
+ }
+ 
+ #define OVERRIDE_INTERPOLATE_PRODUCT_SINGLE
+-static inline float interpolate_product_single(const float *a, const float *b, unsigned int len, const spx_uint32_t oversample, float *frac) {
++float interpolate_product_single(const float *a, const float *b, unsigned int len, const spx_uint32_t oversample, float *frac) {
+   int i;
+   float ret;
+   __m128 sum = _mm_setzero_ps();
+   __m128 f = _mm_loadu_ps(frac);
+   for(i=0;i<len;i+=2)
+   {
+     sum = _mm_add_ps(sum, _mm_mul_ps(_mm_load1_ps(a+i), _mm_loadu_ps(b+i*oversample)));
+     sum = _mm_add_ps(sum, _mm_mul_ps(_mm_load1_ps(a+i+1), _mm_loadu_ps(b+(i+1)*oversample)));
+@@ -70,17 +72,17 @@ static inline float interpolate_product_
+    _mm_store_ss(&ret, sum);
+    return ret;
+ }
+ 
+ #ifdef USE_SSE2
+ #include <emmintrin.h>
+ #define OVERRIDE_INNER_PRODUCT_DOUBLE
+ 
+-static inline double inner_product_double(const float *a, const float *b, unsigned int len)
++double inner_product_double(const float *a, const float *b, unsigned int len)
+ {
+    int i;
+    double ret;
+    __m128d sum = _mm_setzero_pd();
+    __m128 t;
+    for (i=0;i<len;i+=8)
+    {
+       t = _mm_mul_ps(_mm_loadu_ps(a+i), _mm_loadu_ps(b+i));
+@@ -92,17 +94,17 @@ static inline double inner_product_doubl
+       sum = _mm_add_pd(sum, _mm_cvtps_pd(_mm_movehl_ps(t, t)));
+    }
+    sum = _mm_add_sd(sum, _mm_unpackhi_pd(sum, sum));
+    _mm_store_sd(&ret, sum);
+    return ret;
+ }
+ 
+ #define OVERRIDE_INTERPOLATE_PRODUCT_DOUBLE
+-static inline double interpolate_product_double(const float *a, const float *b, unsigned int len, const spx_uint32_t oversample, float *frac) {
++double interpolate_product_double(const float *a, const float *b, unsigned int len, const spx_uint32_t oversample, float *frac) {
+   int i;
+   double ret;
+   __m128d sum;
+   __m128d sum1 = _mm_setzero_pd();
+   __m128d sum2 = _mm_setzero_pd();
+   __m128 f = _mm_loadu_ps(frac);
+   __m128d f1 = _mm_cvtps_pd(f);
+   __m128d f2 = _mm_cvtps_pd(_mm_movehl_ps(f,f));

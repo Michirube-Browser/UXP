@@ -1,0 +1,22 @@
+#filter substitution
+#include ../../@AB_CD@/profile/bookmarks.inc
+#define ja_jp_mac ja-JP-mac
+#if AB_CD == ja_jp_mac
+#define AB_CD ja
+#endif
+
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!DOCTYPE NETSCAPE-Bookmark-file-1>
+<meta charset="UTF-8">
+<title>@bookmarks_title@</title>
+<h1>@bookmarks_heading@</h1>
+
+<dl><p>
+    <dt><h3 personal_toolbar_folder="true">@bookmarks_toolbarfolder@</h3></dt>
+    <dd>@bookmarks_toolbarfolder_description@
+    <dl><p>
+            <dt><a href="https://repo.dactyloidae.xyz/Dactyloidae/UXP/issues" >Report Issues</a></dt>
+    </dl><p>
+</dl>

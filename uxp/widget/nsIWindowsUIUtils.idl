@@ -1,0 +1,50 @@
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+#include "nsISupports.idl"
+
+
+[scriptable, uuid(8eb5da7b-ec94-4cf4-9f2e-9d2b8f8bc763)]
+interface nsIWindowsUIUtils : nsISupports
+{
+  /**
+   * Whether the OS is currently in tablet mode. Always false on
+   * non-Windows and on versions of Windows before win10
+   */
+  readonly attribute boolean inTabletMode;
+
+  /**
+   * Update the tablet mode state
+   */
+  void updateTabletModeState();
+
+  /**
+   * Update native Windows System Media Transport Controls playback state.
+   * No-op on unsupported Windows versions.
+   */
+  void setSMTCPlaybackState(in boolean aPlaying);
+
+  /**
+   * Publish media metadata to native Windows System Media Transport Controls.
+   * No-op on unsupported Windows versions.
+   */
+  void setSMTCMetadata(in AString aTitle,
+                       in AString aArtist,
+                       in AString aAlbum);
+
+  /**
+   * Publish artwork URL to native Windows System Media Transport Controls.
+   * No-op on unsupported Windows versions.
+   */
+  void setSMTCThumbnailURL(in AString aThumbnailURL);
+
+  /**
+   * Clear native Windows System Media Transport Controls metadata.
+   * No-op on unsupported Windows versions.
+   */
+  void clearSMTCMetadata();
+};
+

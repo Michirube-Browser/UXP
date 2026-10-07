@@ -1,0 +1,24 @@
+# -*- Mode: python; indent-tabs-mode: nil; tab-width: 40 -*-
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Theme Selection
+#
+# Shared (toolkit/themes/shared/) is always included.
+#
+# Linux (GTK)             linux (toolkit/themes/linux)
+#                         non-mac (toolkit/themes/shared/non-mac)
+
+toolkit = CONFIG['MOZ_WIDGET_TOOLKIT']
+if CONFIG['MOZ_PHOENIX']:
+    DEFINES['MOZ_PHOENIX'] = 1
+    app = 'browser'
+else:
+    app = CONFIG['MOZ_BUILD_APP']
+
+# Only build the Linux theme
+DIRS += ['linux']
+
+with Files('**'):
+    BUG_COMPONENT = ('Toolkit', 'Themes')

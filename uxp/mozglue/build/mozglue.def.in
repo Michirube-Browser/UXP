@@ -1,0 +1,127 @@
+; This Source Code Form is subject to the terms of the Mozilla Public
+; License, v. 2.0. If a copy of the MPL was not distributed with this
+; file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+LIBRARY mozglue.dll
+
+EXPORTS
+#ifdef MOZ_MEMORY
+  ; symbols that are actually useful
+#ifdef MOZ_REPLACE_MALLOC
+  malloc=malloc_impl
+  calloc=calloc_impl
+  realloc=realloc_impl
+  free=free_impl
+  posix_memalign=posix_memalign_impl
+  malloc_usable_size=malloc_usable_size_impl
+  malloc_good_size=malloc_good_size_impl
+  _aligned_free=free_impl
+#else
+  malloc=je_malloc
+  calloc=je_calloc
+  realloc=je_realloc
+  free=je_free
+  posix_memalign=je_posix_memalign
+  malloc_usable_size=je_malloc_usable_size
+  malloc_good_size=je_malloc_good_size
+  _aligned_free=je_free
+#endif
+  _aligned_malloc
+  strndup=wrap_strndup
+  strdup=wrap_strdup
+  _strdup=wrap_strdup
+  wcsdup=wrap_wcsdup
+  _wcsdup=wrap_wcsdup
+  jemalloc_stats
+  jemalloc_free_dirty_pages
+#ifdef GNU_CC
+  _Z14mozalloc_abortPKc
+#else
+  ?mozalloc_abort@@YAXQEBD@Z
+#endif
+  ; A hack to work around the CRT (see giant comment in Makefile.in)
+  frex=dumb_free_thunk
+
+#ifdef ZLIB_IN_MOZGLUE
+  ; zlib symbols
+  MOZ_Z_zlibVersion
+  MOZ_Z_deflate
+  MOZ_Z_deflateEnd
+  MOZ_Z_inflate
+  MOZ_Z_inflateEnd
+  MOZ_Z_deflateSetDictionary
+  MOZ_Z_deflateCopy
+  MOZ_Z_deflateReset
+  MOZ_Z_deflateParams
+  MOZ_Z_deflateTune
+  MOZ_Z_deflateBound
+  MOZ_Z_deflatePending
+  MOZ_Z_deflatePrime
+  MOZ_Z_deflateSetHeader
+  MOZ_Z_inflateGetDictionary
+  MOZ_Z_inflateSetDictionary
+  MOZ_Z_inflateSync
+  MOZ_Z_inflateCopy
+  MOZ_Z_inflateReset
+  MOZ_Z_inflateReset2
+  MOZ_Z_inflatePrime
+  MOZ_Z_inflateMark
+  MOZ_Z_inflateGetHeader
+  MOZ_Z_inflateBack
+  MOZ_Z_inflateBackEnd
+  MOZ_Z_zlibCompileFlags
+  MOZ_Z_compress
+  MOZ_Z_compress2
+  MOZ_Z_compressBound
+  MOZ_Z_uncompress
+  MOZ_Z_gzopen
+  MOZ_Z_gzdopen
+  MOZ_Z_gzbuffer
+  MOZ_Z_gzsetparams
+  MOZ_Z_gzread
+  MOZ_Z_gzwrite
+  MOZ_Z_gzprintf
+  MOZ_Z_gzvprintf
+  MOZ_Z_gzputs
+  MOZ_Z_gzgets
+  MOZ_Z_gzputc
+  MOZ_Z_gzgetc=gzgetc
+  MOZ_Z_gzungetc
+  MOZ_Z_gzflush
+  MOZ_Z_gzseek
+  MOZ_Z_gzrewind
+  MOZ_Z_gztell
+  MOZ_Z_gzoffset
+  MOZ_Z_gzeof
+  MOZ_Z_gzdirect
+  MOZ_Z_gzclose
+  MOZ_Z_gzclose_r
+  MOZ_Z_gzclose_w
+  MOZ_Z_gzerror
+  MOZ_Z_gzclearerr
+  MOZ_Z_gzopen64
+  MOZ_Z_gzseek64
+  MOZ_Z_gztell64
+  MOZ_Z_gzoffset64
+  MOZ_Z_adler32_combine64
+  MOZ_Z_crc32_combine64
+  MOZ_Z_adler32
+  MOZ_Z_crc32
+  MOZ_Z_adler32_combine
+  MOZ_Z_crc32_combine
+  MOZ_Z_deflateInit_
+  MOZ_Z_deflateInit2_
+  MOZ_Z_inflateInit_
+  MOZ_Z_inflateInit2_
+  MOZ_Z_inflateBackInit_
+  MOZ_Z_zError
+  MOZ_Z_inflateSyncPoint
+  MOZ_Z_get_crc_table
+  MOZ_Z_inflateUndermine
+  MOZ_Z_inflateResetKeep
+  MOZ_Z_deflateResetKeep
+  MOZ_Z_gzgetc_
+  MOZ_Z_gzopen_w
+  inflateValidate
+#endif
+#endif

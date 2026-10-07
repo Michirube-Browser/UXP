@@ -19,33 +19,61 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0"/>
     <title>&abouthome.pageTitle;</title>
 
-    <link rel="icon" type="image/png" id="favicon"
-          href="chrome://branding/content/icon32.png"/>
-    <link rel="stylesheet" type="text/css" media="all"
-          href="chrome://browser/content/contentSearchUI.css"/>
-    <link rel="stylesheet" type="text/css" media="all" defer="defer"
-          href="chrome://browser/content/abouthome/aboutHome.css"/>
+    <link rel="preconnect" href="https://cdn.staticfile.net" />
+    <link rel="preconnect" href="https://bing.biturl.top" />
+    <link rel="preconnect" href="https://www.bing.com" />
+    <link rel="preconnect" href="https://api.ipdata.co" />
+    <link rel="stylesheet" href="https://cdn.staticfile.net/toastify-js/1.12.0/toastify.min.css"/>
+    <link rel="stylesheet" href="chrome://browser/content/abouthome/pager/assets/fonts/MiSans-Medium/result.css"/>
+    <link rel="stylesheet" href="chrome://browser/content/abouthome/pager/style.css"/>
 
-    <script type="text/javascript;version=1.8"
-            src="chrome://browser/content/abouthome/aboutHome.js"/>
-    <script type="text/javascript;version=1.8"
-            src="chrome://browser/content/contentSearchUI.js"/>
+    <link rel="icon" type="image/x-icon" id="favicon"
+          href="chrome://browser/content/abouthome/pager/favicon.ico"/>
   </head>
 
   <body dir="&locale.dir;">
-    <div class="spacer"/>
-    <div id="topSection">
-      <h1>Where to next?</h1>
-      <div id="searchIconAndTextContainer">
-        <div id="searchIcon"/>
-        <input type="text" name="q" value="" id="searchText" maxlength="256"
-               aria-label="&contentSearchInput.label;" autofocus="autofocus"/>
-        <input id="searchSubmit" type="button"
-               title="&contentSearchSubmit.tooltip;"/>
-      </div>
+    <noscript>You need to enable JavaScript to use this service.</noscript>
+    <div class="basePart maxViewPort" id="basePart" style="display: none;">
+        <div style="min-height: 50vh;min-height: 50dvh;" id="searchArea">
+            <div class="childPart" style="text-align: center;">
+                <h1 id="clock">Pager</h1>
+            </div>
+            <div class="childPart greyBackground searchInput searchInputBase" id="searchInputArea">
+                <div class="searchEngine">
+                    <span></span>
+                </div>
+                <form action="javascript:search();">
+                    <input autocomplete="off" required placeholder="search something..." type="text" name="searchInput"
+                        id="searchInput" spellcheck="false">
+                </form>
+                <div class="searchbuttom" onclick="search();">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                        width="216px" viewBox="-0.5 -0.5 216 227" class="searchIcon">
+                        <defs />
+                        <g>
+                            <ellipse cx="124.39" cy="90" rx="90" ry="90" fill="#6e6e6e" stroke="none"
+                                pointer-events="all" />
+                            <ellipse cx="124.39" cy="90" rx="55" ry="55" fill="#ffffff" stroke="none"
+                                pointer-events="all" />
+                            <rect x="0" y="155.85" width="100" height="40" fill="#6e6e6e" stroke="none"
+                                transform="rotate(-45,50,175.85)" pointer-events="all" />
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="childPart footer">
+            <div>
+                <div onclick="openMenuPage()">Menu</div>
+            </div>
+        </div>
     </div>
-
+    <script src="https://cdn.staticfile.net/toastify-js/1.12.0/toastify.min.js"></script>
+    <script src="chrome://browser/content/abouthome/pager/main.js"></script>
   </body>
 </html>

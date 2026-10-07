@@ -50,7 +50,7 @@ inline const char* XMMRegName(XMMRegisterID reg)
        ,"invalid"
     };
     MOZ_ASSERT(size_t(reg) < mozilla::ArrayLength(names));
-    return names[reg];
+    return (reg < mozilla::ArrayLength(names)) ? names[reg] : "invalid";
 }
 
 #ifdef JS_CODEGEN_X64
@@ -63,7 +63,7 @@ inline const char* GPReg64Name(RegisterID reg)
 #endif
     };
     MOZ_ASSERT(size_t(reg) < mozilla::ArrayLength(names));
-    return names[reg];
+    return (reg < mozilla::ArrayLength(names)) ? names[reg] : "invalid";
 }
 #endif
 
@@ -76,7 +76,7 @@ inline const char* GPReg32Name(RegisterID reg)
 #endif
     };
     MOZ_ASSERT(size_t(reg) < mozilla::ArrayLength(names));
-    return names[reg];
+    return (reg < mozilla::ArrayLength(names)) ? names[reg] : "invalid";
 }
 
 inline const char* GPReg16Name(RegisterID reg)
@@ -88,7 +88,7 @@ inline const char* GPReg16Name(RegisterID reg)
 #endif
     };
     MOZ_ASSERT(size_t(reg) < mozilla::ArrayLength(names));
-    return names[reg];
+    return (reg < mozilla::ArrayLength(names)) ? names[reg] : "invalid";
 }
 
 inline const char* GPReg8Name(RegisterID reg)
@@ -101,7 +101,7 @@ inline const char* GPReg8Name(RegisterID reg)
 #endif
     };
     MOZ_ASSERT(size_t(reg) < mozilla::ArrayLength(names));
-    return names[reg];
+    return (reg < mozilla::ArrayLength(names)) ? names[reg] : "invalid";
 }
 
 inline const char* GPRegName(RegisterID reg)
@@ -146,7 +146,7 @@ inline const char* HRegName8(HRegisterID reg)
     };
     size_t index = reg - GetSubregH(rax);
     MOZ_ASSERT(index < mozilla::ArrayLength(names));
-    return names[index];
+    return (index < mozilla::ArrayLength(names)) ? names[index] : "invalid";
 }
 
 enum Condition {
@@ -178,7 +178,7 @@ inline const char* CCName(Condition cc)
         "s ", "ns", "p ", "np", "l ", "ge", "le", "g "
     };
     MOZ_ASSERT(size_t(cc) < mozilla::ArrayLength(names));
-    return names[cc];
+    return (cc < mozilla::ArrayLength(names)) ? names[cc] : "unknown";
 }
 
 // Conditions for CMP instructions (CMPSS, CMPSD, CMPPS, CMPPD, etc).

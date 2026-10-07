@@ -5988,7 +5988,7 @@ StreamCompressionProcess(JSContext* cx, unsigned argc, Value* vp)
             break;
 
         if (zerr != Z_OK && zerr != Z_BUF_ERROR) {
-            JS_ReportErrorASCII(cx, stream.msg ? stream.msg : "Compression stream error");
+            JS_ReportErrorASCII(cx, "%s", stream.msg ? stream.msg : "Compression stream error");
             return false;
         }
     } while (stream.avail_out == 0 || stream.avail_in != 0 ||

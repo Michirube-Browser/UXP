@@ -1,0 +1,11 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Placeholder manifest for the Michishirube Linux-only fork.
+#
+# The OS X theme (toolkit/themes/osx) is not shipped with this browser.
+# This file exists so the shared reftest metadata at
+# layout/reftests/reftest.list (which unconditionally includes this path)
+# still parses during build backend generation. There are no OS X native
+# theme tests on Linux; the harness skips this directory at run time.

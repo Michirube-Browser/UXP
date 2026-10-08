@@ -48,7 +48,10 @@ Michirube includes a local "Get Add-ons" page (`about:addons` → Get Add-ons) w
 
 - Linux (x86_64) — Primary target, tested
 - Windows — Should build (not actively tested)
+- Windows 7/8/Vista/XP - Should fix (not actively tested)
 - macOS — Should build (not actively tested)
+- Android — Should build (not actively tested)
+- IOS — Should build (not actively tested)
 
 ## Project Structure
 
@@ -75,10 +78,13 @@ This project is based on UXP, which is licensed under the Mozilla Public License
 
 ## Credits
 
-- **Tsubaki Project** — Michirube rebranding and distribution
+- **Tsubaki Project** — Michirube rebranding and distribution 
+- **Mapel** — Compiling and Building the entire source code for Linux + Windows
+- **Palemoon Developers** — For supporting and maintaining Palemoon
 - **Basilisk-Dev** — For supporting and maintaining Basilisk
 - **Moonchild Productions** — For creating the Unified XUL Platform and Basilisk
 - **Mozilla Developers** — Firefox ESR 52/60 browser base
+- **.whatdidyouexpect** — Building MacOS Compiler / Executor 
 
 ---
 

@@ -35,7 +35,7 @@ After a successful build, create an installable package:
 # The .deb can be built from obj-michishirube/dist/bin/ using the packaging scripts
 ```
 
-A pre-built Beta package is available on the [Releases page](https://github.com/Michirube-Browser/UXP/releases/tag/v52.9.0-beta1).
+A pre-built Beta package is available on the [Releases page](https://github.com/Michirube-Browser/UXP/releases/tag/v52.9.1-beta1).
 
 ## Add-ons
 

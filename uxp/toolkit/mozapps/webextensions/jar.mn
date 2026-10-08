@@ -3,6 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 toolkit.jar:
+% content mozapps-discover %content/mozapps-discover/ contentaccessible=yes
 #ifndef MOZ_FENNEC
 % content mozapps %content/mozapps/
 * content/mozapps/extensions/extensions.xul                     (content/extensions.xul)
@@ -33,3 +34,8 @@ toolkit.jar:
   content/mozapps/xpinstall/xpinstallConfirm.js                 (../extensions/content/xpinstallConfirm.js)
   content/mozapps/xpinstall/xpinstallConfirm.css                (../extensions/content/xpinstallConfirm.css)
   content/mozapps/xpinstall/xpinstallItem.xml                   (../extensions/content/xpinstallItem.xml)
+  content/mozapps-discover/discover.html                        (content/mozapps-discover/discover.html)
+  content/mozapps-discover/discover-logo.png                    (content/mozapps-discover/discover-logo.png)
+  content/mozapps-discover/basilisk.png                         (content/mozapps-discover/basilisk.png)
+  content/mozapps-discover/caa-extension.png                    (content/mozapps-discover/caa-extension.png)
+  content/mozapps-discover/palemoon.png                         (content/mozapps-discover/palemoon.png)

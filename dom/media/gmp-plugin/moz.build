@@ -3,22 +3,18 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-FINAL_TARGET = 'dist/bin/gmp-fake/1.0'
-
-FINAL_TARGET_FILES += [
-    'fake.info',
-    'fake.voucher',
-]
-
-SOURCES += [
-        'gmp-fake.cpp',
-        'gmp-test-decryptor.cpp',
-        'gmp-test-storage.cpp',
-]
-
-DEFINES['GMP_FAKE_SUPPORT_DECRYPT'] = True
-
-SharedLibrary("fake")
+# Disabled: gmp-fake test plugin (linker issues with cross-compile)
+# FINAL_TARGET = 'dist/bin/gmp-fake/1.0'
+# FINAL_TARGET_FILES += [
+#     'fake.info',
+#     'fake.voucher',
+# ]
+# SOURCES += [
+#         'gmp-fake.cpp',
+#         'gmp-test-storage.cpp',
+# ]
+# DEFINES['GMP_FAKE_SUPPORT_DECRYPT'] = True
+# SharedLibrary("fake")
 
 if CONFIG['OS_ARCH'] == 'WINNT':
     OS_LIBS += [
